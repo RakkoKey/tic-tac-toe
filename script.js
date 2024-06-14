@@ -39,6 +39,11 @@ const displayController = (function(){
         for(let i = 0; i < gameArray.length; i++){
             //hold the first letter in the row
             var letterhold = gameArray[i][0];
+
+            if(letterhold == " "){
+                continue;
+            }
+
             //checks every column in the row
             for(let j = 0; j < gameArray.length; j++){
 
@@ -57,6 +62,7 @@ const displayController = (function(){
 
             count = 0;
         }
+        console.log("No wins yet");
         
 
 
@@ -68,9 +74,9 @@ const displayController = (function(){
 })();
 
 
-gameBoard.setBoard(1, "X");
-gameBoard.setBoard(2, "X");
-gameBoard.setBoard(3, "X");
+gameBoard.setBoard(5, "X");
+gameBoard.setBoard(4, "X");
+gameBoard.setBoard(6, "X");
 gameBoard.displayBoard();
 displayController.checkRow(gameBoard.gameArray);
 
