@@ -1,6 +1,4 @@
 
-
-
 const gameBoard = (function (){
     console.log("Creating Game...");
     const gameArray = 
@@ -64,19 +62,89 @@ const displayController = (function(){
         }
         console.log("No wins yet");
         
+    })
 
+    const checkDiagonal= (function(gameArray){
+        var count = 0;
+        var letterhold = gameArray[0][0];
+        
+        for(let i = 0; i < gameArray.length; i++){
+            if(letterhold == gameArray[i][i]){
+                count++;
+            }else{
+                break;
+            }
+        }
+        if(count == 3){
+            console.log("Diagonal Win");
+            return;
+        }
+        count = 0;
+        letterhold =  gameArray[0][2];
+        console.log(letterhold);
+        for(let i = gameArray.length - 1; i >= 0; i--){
+            var j = 0;
+                
+            if(letterhold == gameArray[j][i]){
+                count++;
+                j++;
+            }else{
+                break;
+            }
+        }
+        if(count == 3){
+            console.log("Diagonal Win");
+            return;
+        }
+
+        
+    })
+
+    const startGame = (function(gameArray, player1, player2){
+        for(var i = 0; i < 9; i++){
+            if(i % 2 == 0){
+                player1.indexInput();
+            }
+        }
+
+    })
+
+    return{checkRow, checkDiagonal, startGame};
+
+})();
+
+function Player(letter){
+
+    var playerLetter = letter;
+
+    const indexInput = (function(){
+
+        var num = prompt("Type a number where you want to place " + playerLetter);
+        gameBoard.setBoard(num, playerLetter);
 
 
     })
 
-    return{checkRow};
-
-})();
 
 
-gameBoard.setBoard(5, "X");
-gameBoard.setBoard(4, "X");
-gameBoard.setBoard(6, "X");
+    return{playerLetter, indexInput};
+}
+
+
+
+//tests
+
+const player1 = new Player("X");
+const player2 = new Player("O");
+
+//player1.indexInput();
+
+
+
+ gameBoard.setBoard(1, "X");
+ gameBoard.setBoard(5, "X");
+ gameBoard.setBoard(9, "X");
 gameBoard.displayBoard();
 displayController.checkRow(gameBoard.gameArray);
+displayController.checkDiagonal(gameBoard.gameArray);
 
