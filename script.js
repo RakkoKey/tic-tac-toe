@@ -82,17 +82,21 @@ const displayController = (function(){
         count = 0;
         letterhold =  gameArray[0][2];
         console.log(letterhold);
-        for(let i = gameArray.length - 1; i >= 0; i--){
-            var j = 0;
-                
-            if(letterhold == gameArray[j][i]){
+        var j = gameArray.length - 1;
+        for(let i = 0 ; i < gameArray.length; i++){
+            
+            
+            //console.log(j);
+            if(letterhold == gameArray[i][j]){
                 count++;
-                j++;
+                j--;
             }else{
                 break;
             }
         }
+        
         if(count == 3){
+            
             console.log("Diagonal Win");
             return;
         }
@@ -141,9 +145,9 @@ const player2 = new Player("O");
 
 
 
- gameBoard.setBoard(1, "X");
+ gameBoard.setBoard(3, "X");
  gameBoard.setBoard(5, "X");
- gameBoard.setBoard(9, "X");
+ gameBoard.setBoard(7, "X");
 gameBoard.displayBoard();
 displayController.checkRow(gameBoard.gameArray);
 displayController.checkDiagonal(gameBoard.gameArray);
