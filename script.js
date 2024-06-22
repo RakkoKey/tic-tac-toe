@@ -64,12 +64,13 @@ const displayController = (function(){
             //if count is 3, we have a match
             if(count == 3){
                 console.log("Row Win!");
-                return;
+                return true;
             }
 
             count = 0;
         }
-        console.log("No wins yet");
+        
+        return false;
         
     })
     const checkDiagonal= (function(gameArray){
@@ -85,7 +86,7 @@ const displayController = (function(){
         }
         if(count == 3){
             console.log("Diagonal Win");
-            return;
+            return true;
         }
 
 
@@ -97,7 +98,7 @@ const displayController = (function(){
             
             
             //console.log(j);
-            if(letterhold == gameArray[i][j]){
+            if(letterhold == gameArray[i][j] && letterhold != " "){
                 count++;
                 j--;
             }else{
@@ -108,8 +109,9 @@ const displayController = (function(){
         if(count == 3){
             
             console.log("Diagonal Win");
-            return;
+            return true;
         }
+        return false;
 
         
     })
@@ -130,18 +132,22 @@ const displayController = (function(){
 
             if(count == 3){
                 console.log("Column Win");
-                break;
+                return true;
             }else{
                 count = 0;
                 j++;
             }
         }
+        return false;
     })
 
     const wrapper = (function(gameArray){
-        checkRow(gameArray);
-        checkDiagonal(gameArray);
-        checkColumn(gameArray);
+        if(checkRow(gameArray) ||
+        checkDiagonal(gameArray) ||
+        checkColumn(gameArray)){
+            return true;
+        }
+        return false;
     })
 
     const startGame = (function(gameArray, player1, player2){
@@ -152,11 +158,19 @@ const displayController = (function(){
 
                 player1.indexInput();
                 gameBoard.displayBoard();
+                if(wrapper(gameArray)){
+                    console.log("Player 1 wins!");
+                    return;
+                }
             }else{
                 //player 2 turn
                 
                 player2.indexInput();
                 gameBoard.displayBoard();
+                if(wrapper(gameArray)){
+                    console.log("Player 2 wins!");
+                    return;
+                }
             }
         }
 
@@ -172,11 +186,16 @@ function Player(letter){
 
     const indexInput = (function(){
 
-        var num = prompt("Type a number where you want to place " + playerLetter);
-        while(gameBoard.getBoardIndex(num)){
-            alert("That spot is already filled!");
-            num = prompt("Type a number where you want to place " + playerLetter);
+        var num = prompt("Type a number (1-9) where you want to place " + playerLetter);
+        while(num > 9){
+            alert("That spot is invalid!");
+            num = prompt("Type a number (1-9) where you want to place " + playerLetter);
         }
+        while(gameBoard.getBoardIndex(num)){
+            alert("That spot is invalid!");
+            num = prompt("Type a number (1-9) where you want to place " + playerLetter);
+        }
+        
         
         gameBoard.setBoard(num, playerLetter);
 
