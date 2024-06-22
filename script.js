@@ -69,7 +69,7 @@ const displayController = (function(){
         var letterhold = gameArray[0][0];
         
         for(let i = 0; i < gameArray.length; i++){
-            if(letterhold == gameArray[i][i]){
+            if(letterhold == gameArray[i][i] && letterhold != " "){
                 count++;
             }else{
                 break;
@@ -103,6 +103,30 @@ const displayController = (function(){
 
         
     })
+    const checkColumn = (function(gameArray){
+        var count = 0;
+        for(let i = 0; i < gameArray.length; i++){
+            let j = 0;
+            var letterhold = gameArray[i][j]
+            if(letterhold == " "){
+                continue;
+            }
+            for(j = 0; j < gameArray.length; j++){
+                 
+                if(letterhold == gameArray[j][i]){
+                    count++;
+                }
+            }
+
+            if(count == 3){
+                console.log("Column Win");
+                break;
+            }else{
+                count = 0;
+                j++;
+            }
+        }
+    })
 
     const startGame = (function(gameArray, player1, player2){
         for(var i = 0; i < 9; i++){
@@ -113,7 +137,7 @@ const displayController = (function(){
 
     })
 
-    return{checkRow, checkDiagonal, startGame};
+    return{checkColumn, checkRow, checkDiagonal, startGame};
 
 })();
 
@@ -145,10 +169,11 @@ const player2 = new Player("O");
 
 
 
- gameBoard.setBoard(3, "X");
- gameBoard.setBoard(5, "X");
+ gameBoard.setBoard(1, "X");
+ gameBoard.setBoard(4, "X");
  gameBoard.setBoard(7, "X");
 gameBoard.displayBoard();
 displayController.checkRow(gameBoard.gameArray);
+displayController.checkColumn(gameBoard.gameArray);
 displayController.checkDiagonal(gameBoard.gameArray);
 
