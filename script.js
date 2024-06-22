@@ -23,10 +23,19 @@ const gameBoard = (function (){
             
         }
     })
+    const getBoardIndex = function(index){
+        var row = parseInt(Math.floor((index - 1) / 3));
+        var column = parseInt(Math.floor((index - 1) % 3));
+        if(gameArray[row][column] != " "){
+            return true;
+        }else{
+            return false;
+        }
+    }
 
 
     console.log("Game created!");
-    return {gameArray, setBoard, displayBoard}
+    return {getBoardIndex, gameArray, setBoard, displayBoard}
 })();
 
 const displayController = (function(){
@@ -54,7 +63,7 @@ const displayController = (function(){
 
             //if count is 3, we have a match
             if(count == 3){
-                console.log("Someone Won!");
+                console.log("Row Win!");
                 return;
             }
 
@@ -63,7 +72,6 @@ const displayController = (function(){
         console.log("No wins yet");
         
     })
-
     const checkDiagonal= (function(gameArray){
         var count = 0;
         var letterhold = gameArray[0][0];
@@ -79,6 +87,8 @@ const displayController = (function(){
             console.log("Diagonal Win");
             return;
         }
+
+
         count = 0;
         letterhold =  gameArray[0][2];
         console.log(letterhold);
@@ -128,16 +138,31 @@ const displayController = (function(){
         }
     })
 
+    const wrapper = (function(gameArray){
+        checkRow(gameArray);
+        checkDiagonal(gameArray);
+        checkColumn(gameArray);
+    })
+
     const startGame = (function(gameArray, player1, player2){
         for(var i = 0; i < 9; i++){
             if(i % 2 == 0){
+                //player 1 turn
+
+
                 player1.indexInput();
+                gameBoard.displayBoard();
+            }else{
+                //player 2 turn
+                
+                player2.indexInput();
+                gameBoard.displayBoard();
             }
         }
 
     })
 
-    return{checkColumn, checkRow, checkDiagonal, startGame};
+    return{wrapper, startGame};
 
 })();
 
@@ -148,6 +173,11 @@ function Player(letter){
     const indexInput = (function(){
 
         var num = prompt("Type a number where you want to place " + playerLetter);
+        while(gameBoard.getBoardIndex(num)){
+            alert("That spot is already filled!");
+            num = prompt("Type a number where you want to place " + playerLetter);
+        }
+        
         gameBoard.setBoard(num, playerLetter);
 
 
@@ -169,11 +199,11 @@ const player2 = new Player("O");
 
 
 
- gameBoard.setBoard(1, "X");
- gameBoard.setBoard(4, "X");
- gameBoard.setBoard(7, "X");
+//gameBoard.setBoard(1, "X");
+//gameBoard.setBoard(4, "X");
+//gameBoard.setBoard(7, "X");
 gameBoard.displayBoard();
-displayController.checkRow(gameBoard.gameArray);
-displayController.checkColumn(gameBoard.gameArray);
-displayController.checkDiagonal(gameBoard.gameArray);
+displayController.startGame(gameBoard.gameArray, player1, player2);
+displayController.wrapper(gameBoard.gameArray);
+
 
