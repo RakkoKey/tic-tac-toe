@@ -207,14 +207,23 @@ function Player(letter){
     return{playerLetter, indexInput};
 }
 
+const documentController = (function(){
+    const updateBox = function(element, letter){
+        element.innerHTML = letter;
+        element.classList.add(`${letter}`);
+    }
+    return {updateBox};
+})();
 
 
 //tests
 
 const player1 = new Player("X");
 const player2 = new Player("O");
-
-//player1.indexInput();
+var boxes = document.getElementsByClassName("box");
+for(let i = 0; i < boxes.length; i++){
+    boxes[i].addEventListener("click", function(){}); //filler for now
+}
 
 
 
@@ -222,7 +231,7 @@ const player2 = new Player("O");
 //gameBoard.setBoard(4, "X");
 //gameBoard.setBoard(7, "X");
 gameBoard.displayBoard();
-displayController.startGame(gameBoard.gameArray, player1, player2);
+//displayController.startGame(gameBoard.gameArray, player1, player2);
 displayController.wrapper(gameBoard.gameArray);
 
 
