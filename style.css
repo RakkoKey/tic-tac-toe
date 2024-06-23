@@ -1,0 +1,29 @@
+body{
+    height: 100vh;
+}
+
+.board{
+    display:grid;
+    grid-template-rows: 150px 150px 150px;
+    grid-template-columns: 150px 150px 150px;
+    background-color:lightblue;
+    place-content: center;
+    
+}
+.box{
+    border-color:green;
+    border-width:4px;
+    border-style:solid;
+}
+#one, #two, #three {
+    border-top:0;
+}
+#one, #four, #seven{
+    border-left: 0;
+}
+#three, #six, #nine{
+    border-right:0;
+}
+#seven, #eight, #nine{
+    border-bottom: 0;
+}
