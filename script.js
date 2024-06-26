@@ -151,6 +151,7 @@ const displayController = (function(){
     })
 
     const startGame = (function(gameArray, player1, player2){
+        documentController.addListeners();
         for(var i = 0; i < 9; i++){
             if(i % 2 == 0){
                 //player 1 turn
@@ -208,11 +209,21 @@ function Player(letter){
 }
 
 const documentController = (function(){
-    const updateBox = function(element, letter){
+    const updateBox = function(element, letter, index){
+        console.log(index);
         element.innerHTML = letter;
         element.classList.add(`${letter}`);
     }
-    return {updateBox};
+    const addListeners = function(){
+        console.log("listeners")
+        for(let i = 0; i < boxes.length; i++){
+            boxes[i].addEventListener("click", function(){
+                var index = boxes.indexOf(event.target);
+                documentController.updateBox(event.target, "X", index)
+            }); //filler for now
+        }
+    }
+    return {updateBox, addListeners};
 })();
 
 
@@ -220,11 +231,16 @@ const documentController = (function(){
 
 const player1 = new Player("X");
 const player2 = new Player("O");
-var boxes = document.getElementsByClassName("box");
-for(let i = 0; i < boxes.length; i++){
-    boxes[i].addEventListener("click", function(){}); //filler for now
-}
+var boxes = Array.prototype.slice.call(document.getElementsByClassName("box"));
 
+console.log(boxes);
+
+documentController.addListeners();
+
+// var button = document.getElementById("startGame");
+// button.addEventListener("click", function(){
+//     displayController.startGame(gameArray,player1,pla);
+// })
 
 
 //gameBoard.setBoard(1, "X");
