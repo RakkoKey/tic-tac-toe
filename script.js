@@ -32,10 +32,19 @@ const gameBoard = (function (){
             return false;
         }
     }
+    
+
+    const resetBoard = function(){
+        for(let i = 0; i < gameArray.length; i++){
+            for(let j = 0; j < gameArray.length; i++){
+                gameArray[i][j] = " ";
+            }
+        }
+    }
 
 
     console.log("Game created!");
-    return {getBoardIndex, gameArray, setBoard, displayBoard}
+    return {resetBoard, getBoardIndex, gameArray, setBoard, displayBoard}
 })();
 
 const displayController = (function(){
@@ -156,42 +165,7 @@ const displayController = (function(){
         documentController.setLetter(player1.playerLetter);
         console.log(player1.playerLetter);
 
-        // while(player1.playerTurn){
-            
-        //     playerturn.innerHTML = "Player 1 turn";
-        //     documentController.setLetter(player1.playerLetter);
-
-
-        // }
-        // while(player2.playerTurn){
-        //     playerturn.innerHTML = "Player 2 turn";
-        //     documentController.setLetter(player2.playerLetter);
-        // }
         
-        
-        
-        // for(var i = 0; i < 9; i++){
-        //     if(i % 2 == 0){
-        //         //player 1 turn
-
-        //         documentController.setLetter(player1.letter);
-        //         player1.indexInput();
-        //         gameBoard.displayBoard();
-        //         if(wrapper(gameArray)){
-        //             console.log("Player 1 wins!");
-        //             return;
-        //         }
-        //     }else{
-        //         //player 2 turn
-        //         documentController.setLetter(player2.letter);
-        //         player2.indexInput();
-        //         gameBoard.displayBoard();
-        //         if(wrapper(gameArray)){
-        //             console.log("Player 2 wins!");
-        //             return;
-        //         }
-        //     }
-        // }
 
     })
 
@@ -203,27 +177,9 @@ function Player(letter){
 
     var playerLetter = letter;
     var playerTurn = false;
-    const indexInput = (function(){
-
-        //var num = prompt("Type a number (1-9) where you want to place " + playerLetter);
-        // while(num > 9){
-        //     alert("That spot is invalid!");
-        //     num = prompt("Type a number (1-9) where you want to place " + playerLetter);
-        // }
-        // while(gameBoard.getBoardIndex(num)){
-        //     alert("That spot is invalid!");
-        //     num = prompt("Type a number (1-9) where you want to place " + playerLetter);
-        // }
-        
-        
-        gameBoard.setBoard(playerTurn, num, playerLetter);
 
 
-    })
-
-
-
-    return{playerLetter, indexInput};
+    return{playerLetter, playerTurn};
 }
 
 const documentController = (function(){
@@ -236,23 +192,28 @@ const documentController = (function(){
     }
 
     const updateBox = function(element,index){
-        console.log(this.letter);
-        element.innerHTML = this.letter;
-        element.classList.add(`${letter}`);
-        console.log(documentController.getLetter() + ";" + player1.playerLetter)
-        gameBoard.setBoard(index, this.letter);
-        if(this.letter == player1.playerLetter){
-            playerturn.innerHTML = "Player 2 Turn";
-            documentController.setLetter(player2.playerLetter)
-            player1.playerTurn = false;
-            player2.playerTurn = true;
-            
-        }else{
-            playerturn.innerHTML = "Player 1 Turn";
-            player2.playerTurn = false;
-            player1.playerTurn = true;
-            documentController.setLetter(player1.playerLetter)
-            
+        var row = parseInt(Math.floor((index ) / 3));
+        var column = parseInt(Math.floor((index ) % 3));
+        
+        if(gameBoard.gameArray[row][column] == " "){
+            console.log(this.letter);
+            element.innerHTML = this.letter;
+            element.classList.add(`${letter}`);
+            console.log(documentController.getLetter() + ";" + player1.playerLetter)
+            gameBoard.setBoard(index, this.letter);
+            if(this.letter == player1.playerLetter){
+                playerturn.innerHTML = "Player 2 Turn";
+                documentController.setLetter(player2.playerLetter)
+                player1.playerTurn = false;
+                player2.playerTurn = true;
+                
+            }else{
+                playerturn.innerHTML = "Player 1 Turn";
+                player2.playerTurn = false;
+                player1.playerTurn = true;
+                documentController.setLetter(player1.playerLetter)
+                
+            }
         }
     }
     const addListeners = function(){
@@ -299,6 +260,6 @@ button.addEventListener("click", function(){
 //gameBoard.setBoard(7, "X");
 gameBoard.displayBoard();
 //displayController.startGame(gameBoard.gameArray, player1, player2);
-displayController.wrapper(gameBoard.gameArray);
+//displayController.wrapper(gameBoard.gameArray);
 
 
