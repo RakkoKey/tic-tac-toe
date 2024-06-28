@@ -48,6 +48,7 @@ const gameBoard = (function (){
 })();
 
 const displayController = (function(){
+    var turns = 0;
     const checkRow = (function(gameArray){
 
         var count = 0;
@@ -165,11 +166,15 @@ const displayController = (function(){
         documentController.setLetter(player1.playerLetter);
         console.log(player1.playerLetter);
 
-        
+    })
+    const endGame = (function(){
+
+        playerturn.innerHTML = "Draw!";
+
 
     })
 
-    return{wrapper, startGame};
+    return{wrapper, startGame, turns, endGame};
 
 })();
 
@@ -177,9 +182,9 @@ function Player(letter){
 
     var playerLetter = letter;
     var playerTurn = false;
+    var winner = false;
 
-
-    return{playerLetter, playerTurn};
+    return{playerLetter, playerTurn, winner};
 }
 
 const documentController = (function(){
@@ -196,6 +201,13 @@ const documentController = (function(){
         var column = parseInt(Math.floor((index ) % 3));
         
         if(gameBoard.gameArray[row][column] == " "){
+            displayController.turns++;
+            if(displayController.turns == 9){
+                displayController.endGame();
+                return;
+            }
+            console.log("Turn: " + displayController.turns);
+
             console.log(this.letter);
             element.innerHTML = this.letter;
             element.classList.add(`${letter}`);
@@ -216,20 +228,31 @@ const documentController = (function(){
             }
         }
     }
-    const addListeners = function(){
-        console.log("listeners")
-        for(let i = 0; i < boxes.length; i++){
-            boxes[i].addEventListener("click", function(){
-                var index = boxes.indexOf(event.target);
+    const handler = function(){
+        var index = boxes.indexOf(event.target);
                 //gameBoard.setBoard(index + 1, this.letter);
                 documentController.updateBox(event.target, index)
                 gameBoard.displayBoard();
-                displayController.wrapper(gameBoard.gameArray);
+                if(displayController.wrapper(gameBoard.gameArray)){
+                    documentController.removeListeners();
+                }
+    }
+    const addListeners = function(){
+        console.log("listeners")
+        for(let i = 0; i < boxes.length; i++){
+            boxes[i].addEventListener("click", handler);
                 
-            }); //filler for now
+            
+             
         }
     }
-    return {setLetter, getLetter, updateBox, addListeners};
+
+    const removeListeners = function(){
+        for(let i = 0; i < boxes.length; i++){
+            boxes[i].removeEventListener("click", handler);
+        }
+    }
+    return {setLetter, getLetter, updateBox, addListeners, removeListeners};
 })();
 
 
