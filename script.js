@@ -260,6 +260,7 @@ const documentController = (function(){
                 //gameBoard.setBoard(index + 1, this.letter);
                 documentController.updateBox(event.target, index)
                 gameBoard.displayBoard();
+                displayController.wrapper(gameBoard.gameArray);
                 
             }); //filler for now
         }
