@@ -119,8 +119,9 @@ const displayController = (function(){
         var count = 0;
         for(let i = 0; i < gameArray.length; i++){
             let j = 0;
-            var letterhold = gameArray[i][j]
+            var letterhold = gameArray[j][i]
             if(letterhold == " "){
+                
                 continue;
             }
             for(j = 0; j < gameArray.length; j++){
@@ -155,15 +156,17 @@ const displayController = (function(){
         documentController.setLetter(player1.playerLetter);
         console.log(player1.playerLetter);
 
-        while(player1.playerTurn){
+        // while(player1.playerTurn){
+            
+        //     playerturn.innerHTML = "Player 1 turn";
+        //     documentController.setLetter(player1.playerLetter);
 
-            documentController.setLetter(player1.playerLetter);
 
-
-        }
-        while(player2.playerTurn){
-            documentController.setLetter(player2.playerLetter)
-        }
+        // }
+        // while(player2.playerTurn){
+        //     playerturn.innerHTML = "Player 2 turn";
+        //     documentController.setLetter(player2.playerLetter);
+        // }
         
         
         
@@ -280,8 +283,13 @@ console.log(boxes);
 //documentController.addListeners();
 
 var button = document.getElementById("startGame");
+let playerturn = document.createElement("div");
 button.addEventListener("click", function(){
     displayController.startGame(gameBoard.gameArray,player1,player2);
+    
+    document.body.appendChild(playerturn);
+    
+
 })
 
 
