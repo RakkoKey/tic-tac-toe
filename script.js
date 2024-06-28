@@ -10,8 +10,8 @@ const gameBoard = (function (){
         if(index > 9){
             console.log("That is not a valid index")
         }
-        var row = parseInt(Math.floor((index - 1) / 3));
-        var column = parseInt(Math.floor((index - 1) % 3));
+        var row = parseInt(Math.floor((index ) / 3));
+        var column = parseInt(Math.floor((index ) % 3));
         
         gameArray[row][column] = letter;
         
@@ -237,14 +237,19 @@ const documentController = (function(){
         element.innerHTML = this.letter;
         element.classList.add(`${letter}`);
         console.log(documentController.getLetter() + ";" + player1.playerLetter)
-        if(documentController.getLetter() == player1.playerLetter){
+        gameBoard.setBoard(index, this.letter);
+        if(this.letter == player1.playerLetter){
             console.log("Test");
             console.log("Current letter: " + documentController.getLetter());
             documentController.setLetter(player2.playerLetter)
             player1.playerTurn = false;
             player2.playerTurn = true;
+            
         }else{
+            player2.playerTurn = false;
+            player1.playerTurn = true;
             documentController.setLetter(player1.playerLetter)
+            
         }
     }
     const addListeners = function(){
@@ -252,7 +257,9 @@ const documentController = (function(){
         for(let i = 0; i < boxes.length; i++){
             boxes[i].addEventListener("click", function(){
                 var index = boxes.indexOf(event.target);
+                //gameBoard.setBoard(index + 1, this.letter);
                 documentController.updateBox(event.target, index)
+                gameBoard.displayBoard();
                 
             }); //filler for now
         }
