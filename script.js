@@ -248,7 +248,7 @@ const documentController = (function(){
             player2.playerTurn = true;
             
         }else{
-            playerturn.innerHTML = "Player 1 turn";
+            playerturn.innerHTML = "Player 1 Turn";
             player2.playerTurn = false;
             player1.playerTurn = true;
             documentController.setLetter(player1.playerLetter)
@@ -284,11 +284,12 @@ console.log(boxes);
 
 var button = document.getElementById("startGame");
 let playerturn = document.createElement("div");
+playerturn.setAttribute("id", "playerturn");
 button.addEventListener("click", function(){
     displayController.startGame(gameBoard.gameArray,player1,player2);
     
     document.body.appendChild(playerturn);
-    playerturn.innerHTML = "Player 1 turn";
+    playerturn.innerHTML = "Player 1 Turn";
 
 })
 

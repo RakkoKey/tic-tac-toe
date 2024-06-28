@@ -32,3 +32,23 @@ body{
 #seven, #eight, #nine{
     border-bottom: 0;
 }
+#playerturn{
+    font-size: 32px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#buttondiv{
+    display:flex;
+    align-items: center;
+    justify-content: center;
+}
+#startGame{
+    border-style:none;
+    border-radius: 22px;
+    color:white;
+    background-color:green;
+    padding:32px;
+    margin:6px;
+
+}
