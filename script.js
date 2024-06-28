@@ -242,13 +242,13 @@ const documentController = (function(){
         console.log(documentController.getLetter() + ";" + player1.playerLetter)
         gameBoard.setBoard(index, this.letter);
         if(this.letter == player1.playerLetter){
-            console.log("Test");
-            console.log("Current letter: " + documentController.getLetter());
+            playerturn.innerHTML = "Player 2 Turn";
             documentController.setLetter(player2.playerLetter)
             player1.playerTurn = false;
             player2.playerTurn = true;
             
         }else{
+            playerturn.innerHTML = "Player 1 turn";
             player2.playerTurn = false;
             player1.playerTurn = true;
             documentController.setLetter(player1.playerLetter)
@@ -288,7 +288,7 @@ button.addEventListener("click", function(){
     displayController.startGame(gameBoard.gameArray,player1,player2);
     
     document.body.appendChild(playerturn);
-    
+    playerturn.innerHTML = "Player 1 turn";
 
 })
 
