@@ -73,6 +73,11 @@ const displayController = (function(){
 
             //if count is 3, we have a match
             if(count == 3){
+                if(letterhold == player1.playerLetter){
+                    player1.winner = true;
+                }else{
+                    player2.winner = true;
+                }
                 console.log("Row Win!");
                 return true;
             }
@@ -95,6 +100,11 @@ const displayController = (function(){
             }
         }
         if(count == 3){
+            if(letterhold == player1.playerLetter){
+                player1.winner = true;
+            }else{
+                player2.winner = true;
+            }
             console.log("Diagonal Win");
             return true;
         }
@@ -117,7 +127,11 @@ const displayController = (function(){
         }
         
         if(count == 3){
-            
+            if(letterhold == player1.playerLetter){
+                player1.winner = true;
+            }else{
+                player2.winner = true;
+            }
             console.log("Diagonal Win");
             return true;
         }
@@ -142,6 +156,11 @@ const displayController = (function(){
             }
 
             if(count == 3){
+                if(letterhold == player1.playerLetter){
+                    player1.winner = true;
+                }else{
+                    player2.winner = true;
+                }
                 console.log("Column Win");
                 return true;
             }else{
@@ -168,8 +187,15 @@ const displayController = (function(){
 
     })
     const endGame = (function(){
-
-        playerturn.innerHTML = "Draw!";
+        documentController.removeListeners();
+        if(player1.winner == true){
+            playerturn.innerHTML = "Player 1 wins!";
+        }else if(player2.winner == true){
+            playerturn.innerHTML = "Player 2 wins!";
+        }else{
+            playerturn.innerHTML = "Draw!";
+        }
+        
 
 
     })
@@ -202,10 +228,7 @@ const documentController = (function(){
         
         if(gameBoard.gameArray[row][column] == " "){
             displayController.turns++;
-            if(displayController.turns == 9){
-                displayController.endGame();
-                return;
-            }
+            
             console.log("Turn: " + displayController.turns);
 
             console.log(this.letter);
@@ -213,6 +236,12 @@ const documentController = (function(){
             element.classList.add(`${letter}`);
             console.log(documentController.getLetter() + ";" + player1.playerLetter)
             gameBoard.setBoard(index, this.letter);
+            if(displayController.turns == 9){
+                displayController.wrapper(gameBoard.gameArray);
+                console.log("test");
+                displayController.endGame();
+                return;
+            }
             if(this.letter == player1.playerLetter){
                 playerturn.innerHTML = "Player 2 Turn";
                 documentController.setLetter(player2.playerLetter)
@@ -234,7 +263,7 @@ const documentController = (function(){
                 documentController.updateBox(event.target, index)
                 gameBoard.displayBoard();
                 if(displayController.wrapper(gameBoard.gameArray)){
-                    documentController.removeListeners();
+                    displayController.endGame();
                 }
     }
     const addListeners = function(){
