@@ -36,7 +36,7 @@ const gameBoard = (function (){
 
     const resetBoard = function(){
         for(let i = 0; i < gameArray.length; i++){
-            for(let j = 0; j < gameArray.length; i++){
+            for(let j = 0; j < gameArray.length; j++){
                 gameArray[i][j] = " ";
             }
         }
@@ -195,7 +195,18 @@ const displayController = (function(){
         }else{
             playerturn.innerHTML = "Draw!";
         }
+        var resetbutton = document.createElement("button"); 
+        resetbutton.addEventListener("click", function(){
+            console.log("reset button clicked");
+            gameBoard.resetBoard();
+            documentController.resetDisplay();
+            displayController.startGame(gameBoard.gameArray, player1, player2);
+            displayController.turns = 0;
+            playerturn.innerHTML = "Player 1 Turn";
+        });  
         
+        resetbutton.innerHTML = "Restart Game";
+        button.replaceWith(resetbutton);
 
 
     })
@@ -281,7 +292,13 @@ const documentController = (function(){
             boxes[i].removeEventListener("click", handler);
         }
     }
-    return {setLetter, getLetter, updateBox, addListeners, removeListeners};
+
+    const resetDisplay = function(){
+        for(let i = 0; i < boxes.length; i++){
+            boxes[i].innerHTML = i + 1;
+        }
+    }
+    return {setLetter, getLetter, updateBox, addListeners, removeListeners, resetDisplay};
 })();
 
 
