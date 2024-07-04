@@ -189,9 +189,9 @@ const displayController = (function(){
     const endGame = (function(){
         documentController.removeListeners();
         if(player1.winner == true){
-            playerturn.innerHTML = "Player 1 wins!";
+            playerturn.innerHTML = `${player1.name} Wins!`;
         }else if(player2.winner == true){
-            playerturn.innerHTML = "Player 2 wins!";
+            playerturn.innerHTML = `${player2.name} Wins!`;
         }else{
             playerturn.innerHTML = "Draw!";
         }
@@ -202,7 +202,7 @@ const displayController = (function(){
             documentController.resetDisplay();
             displayController.startGame(gameBoard.gameArray, player1, player2);
             displayController.turns = 0;
-            playerturn.innerHTML = "Player 1 Turn";
+            playerturn.innerHTML = `${player1.name}\'s Turn`;
         });  
         
         resetbutton.innerHTML = "Restart Game";
@@ -255,13 +255,13 @@ const documentController = (function(){
                 return;
             }
             if(this.letter == player1.playerLetter){
-                playerturn.innerHTML = "Player 2 Turn";
+                playerturn.innerHTML = `${player2.name}\'s Turn`;
                 documentController.setLetter(player2.playerLetter)
                 player1.playerTurn = false;
                 player2.playerTurn = true;
                 
             }else{
-                playerturn.innerHTML = "Player 1 Turn";
+                playerturn.innerHTML = `${player1.name}\'s Turn`;
                 player2.playerTurn = false;
                 player1.playerTurn = true;
                 documentController.setLetter(player1.playerLetter)
@@ -326,7 +326,7 @@ button.addEventListener("click", function(){
     displayController.startGame(gameBoard.gameArray,player1,player2);
     
     document.body.appendChild(playerturn);
-    playerturn.innerHTML = "Player 1 Turn";
+    playerturn.innerHTML = `${player1.name}\'s Turn`;
 
 })
 
