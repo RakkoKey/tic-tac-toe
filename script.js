@@ -215,13 +215,14 @@ const displayController = (function(){
 
 })();
 
-function Player(letter){
+function Player(letter, newname){
 
     var playerLetter = letter;
     var playerTurn = false;
     var winner = false;
+    var name = newname;
 
-    return{playerLetter, playerTurn, winner};
+    return{playerLetter, playerTurn, winner,name};
 }
 
 const documentController = (function(){
@@ -304,18 +305,24 @@ const documentController = (function(){
 
 //tests
 
-const player1 = new Player("X");
-const player2 = new Player("O");
+
 var boxes = Array.prototype.slice.call(document.getElementsByClassName("box"));
 
 console.log(boxes);
 
 //documentController.addListeners();
-
+const player1 = new Player("X", "1");
+const player2 = new Player("O", "2");
 var button = document.getElementById("startGame");
 let playerturn = document.createElement("div");
 playerturn.setAttribute("id", "playerturn");
 button.addEventListener("click", function(){
+    const player1Name = new FormData(document.getElementById("player1"));
+    const player2Name = new FormData(document.getElementById("player2"));
+    player1.name = player1Name.get("player1name");
+    player2.name = player2Name.get("player2name");
+    //var player1 = new Player("X", player1Name.get("player1name"));
+    //var player2 = new Player("O", player2Name.get("player2name"));
     displayController.startGame(gameBoard.gameArray,player1,player2);
     
     document.body.appendChild(playerturn);
